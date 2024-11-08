@@ -1,3 +1,5 @@
+import PropTypes from "prop-types";
+
 export default function ContactItemImage({ imageUrl }) {
   return (
     <div className="contact-item__image">
@@ -5,3 +7,7 @@ export default function ContactItemImage({ imageUrl }) {
     </div>
   );
 }
+
+ContactItemImage.propTypes = {
+  imageUrl: PropTypes.string.isRequired,
+};
