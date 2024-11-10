@@ -4,6 +4,7 @@ import { useSearchParams } from "react-router-dom";
 import ContactList from "../components/ContactList";
 import SearchBar from "../components/SearchBar";
 import { getContacts, deleteContact } from "../utils/api";
+import { LocaleConsumer } from "../contexts/LocaleContext";
 
 export default function HomePageWrapper() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -70,15 +71,25 @@ class HomePage extends React.Component {
         .toLowerCase()
         .includes(this.state.keyword.toLowerCase());
     });
+
     return (
-      <section>
-        <SearchBar
-          keyword={this.state.keyword}
-          keywordChange={this.onKeyWordChangeHandler}
-        />
-        <h2>Daftar Kontak</h2>
-        <ContactList contacts={contacts} onDelete={this.onDeleteHandler} />
-      </section>
+      <LocaleConsumer>
+        {({ locale }) => {
+          return (
+            <section>
+              <SearchBar
+                keyword={this.state.keyword}
+                keywordChange={this.onKeyWordChangeHandler}
+              />
+              <h2>{locale === "id" ? "Daftar Kontak" : "Contacts List"}</h2>
+              <ContactList
+                contacts={contacts}
+                onDelete={this.onDeleteHandler}
+              />
+            </section>
+          );
+        }}
+      </LocaleConsumer>
     );
   }
 }
